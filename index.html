@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Maham 💗</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffdde1, #ff9a9e, #fecfef, #ff77a9);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .container {
+    text-align: center;
+    padding: 40px 25px;
+    z-index: 10;
+    max-width: 500px;
+  }
+
+  .balloon {
+    position: fixed;
+    bottom: -150px;
+    font-size: 45px;
+    animation: floatUp linear infinite;
+    z-index: 1;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+    100% { transform: translateY(-110vh) rotate(15deg); opacity: 0; }
+  }
+
+  .heart {
+    position: fixed;
+    top: -30px;
+    font-size: 20px;
+    animation: fall linear infinite;
+    z-index: 1;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.8;}
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3;}
+  }
+
+  .cake {
+    font-size: 80px;
+    animation: bounce 2s ease-in-out infinite;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  h1 {
+    font-size: 2.6em;
+    color: #ffffff;
+    text-shadow: 2px 2px 10px rgba(255, 20, 100, 0.5);
+    margin: 20px 0 10px;
+    animation: popIn 1.2s ease;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .name {
+    font-size: 1.4em;
+    color: #fff0f5;
+    font-weight: 300;
+    margin-bottom: 25px;
+  }
+
+  .message-box {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(255, 20, 100, 0.2);
+    animation: fadeInUp 1.5s ease;
+    min-height: 110px;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message-box p {
+    color: #ffffff;
+    font-size: 1.05em;
+    line-height: 1.7;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 2px;
+    background: #fff;
+    animation: blink 0.8s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .party-request {
+    margin-top: 25px;
+    background: #ffffff;
+    color: #ff4785;
+    padding: 18px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.15em;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    animation: shake 3s ease-in-out infinite;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s ease;
+  }
+  .party-request:active { transform: scale(0.95); }
+
+  @keyframes shake {
+    0%, 90%, 100% { transform: rotate(0deg); }
+    92% { transform: rotate(-3deg); }
+    94% { transform: rotate(3deg); }
+    96% { transform: rotate(-2deg); }
+    98% { transform: rotate(2deg); }
+  }
+
+  .party-reaction {
+    margin-top: 14px;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 600;
+    min-height: 24px;
+    text-shadow: 1px 1px 6px rgba(255,20,100,0.4);
+  }
+
+  .emoji-row {
+    font-size: 1.8em;
+    margin-top: 20px;
+    letter-spacing: 8px;
+  }
+
+  .sparkle {
+    position: fixed;
+    font-size: 18px;
+    animation: sparkle 2.5s ease-in-out infinite;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .music-btn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 1.3em;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    z-index: 20;
+    transition: transform 0.2s ease;
+  }
+  .music-btn:hover { transform: scale(1.1); }
+
+  .confetti-piece {
+    position: fixed;
+    top: -20px;
+    width: 10px;
+    height: 10px;
+    z-index: 30;
+    pointer-events: none;
+  }
+
+  footer {
+    margin-top: 30px;
+    font-size: 0.8em;
+    color: rgba(255,255,255,0.7);
+  }
+</style>
+</head>
+<body>
+
+  <button class="music-btn" id="musicBtn" title="Play music">🔇</button>
+
+  <div class="container">
+    <div class="cake" id="cake" title="Tap for confetti!">🎂</div>
+    <h1>Happy Birthday!</h1>
+    <div class="name">Maham 💗</div>
+
+    <div class="message-box">
+      <p id="typedMessage"></p>
+    </div>
+
+    <button class="party-request" id="partyBtn">
+      🎉 Ab party kab de rahi ho?! 🎉
+    </button>
+    <div class="party-reaction" id="partyReaction"></div>
+
+    <div class="emoji-row">🎈🎁🎀🍰🎊</div>
+
+    <footer>Made with 💗 just for you</footer>
+  </div>
+
+<script>
+  // ---------- Floating balloons ----------
+  const balloonEmojis = ['🎈','🎈','🎈','🩷'];
+  for (let i = 0; i < 12; i++) {
+    const b = document.createElement('div');
+    b.className = 'balloon';
+    b.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+    b.style.left = Math.random() * 100 + 'vw';
+    b.style.animationDuration = (6 + Math.random() * 6) + 's';
+    b.style.animationDelay = (Math.random() * 6) + 's';
+    document.body.appendChild(b);
+  }
+
+  // ---------- Falling hearts ----------
+  const heartEmojis = ['💗','💕','💖','💓'];
+  for (let i = 0; i < 20; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (5 + Math.random() * 5) + 's';
+    h.style.animationDelay = (Math.random() * 8) + 's';
+    document.body.appendChild(h);
+  }
+
+  // ---------- Sparkles ----------
+  const sparkleEmojis = ['✨','⭐','💫'];
+  for (let i = 0; i < 15; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.animationDelay = (Math.random() * 3) + 's';
+    document.body.appendChild(s);
+  }
+
+  // ---------- Typing effect ----------
+  const fullMessage = "Aaj ka din khaas hai, kyunke aap paida hui! 🌸 Hamesha khush raho, muskurati raho, aur zindagi mein wohi milay jo dil chahay. Bohat saari khushiyan, pyar aur barkatein aapke naseeb mein hon. ✨";
+  const typedEl = document.getElementById('typedMessage');
+  let idx = 0;
+  function typeNext() {
+    if (idx <= fullMessage.length) {
+      typedEl.innerHTML = fullMessage.slice(0, idx) + '<span class="cursor-blink">|</span>';
+      idx++;
+      setTimeout(typeNext, 35);
+    } else {
+      typedEl.innerHTML = fullMessage;
+    }
+  }
+  setTimeout(typeNext, 600);
+
+  // ---------- Confetti burst ----------
+  const confettiColors = ['#ff77a9','#ffdde1','#ff4785','#fff0f5','#ffb6c1','#fecfef'];
+  function burstConfetti(count = 60) {
+    for (let i = 0; i < count; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      const duration = 2 + Math.random() * 2;
+      c.style.transition = `transform ${duration}s ease-out, opacity ${duration}s ease-out`;
+      document.body.appendChild(c);
+      requestAnimationFrame(() => {
+        c.style.transform = `translateY(${100 + Math.random()*20}vh) rotate(${Math.random()*720}deg)`;
+        c.style.opacity = '0';
+      });
+      setTimeout(() => c.remove(), duration * 1000 + 100);
+    }
+  }
+
+  // Cake click -> confetti
+  document.getElementById('cake').addEventListener('click', () => burstConfetti(50));
+
+  // ---------- Party button fun reactions ----------
+  const reactions = [
+    "Sochti hoon... 🤔",
+    "Achaaa! Toh date fix karti hoon 📅",
+    "Cake, dosti, aur bohat shor-sharaba honi chahiye! 🍰🔊",
+    "Theek hai theek hai... jald hi! 😄",
+    "Party bina Maham ke adhoori hai! 🎊",
+    "Venue book karo, guests bulao... let's go! 🥳"
+  ];
+  let reactionIdx = 0;
+  const partyBtn = document.getElementById('partyBtn');
+  const partyReaction = document.getElementById('partyReaction');
+  partyBtn.addEventListener('click', () => {
+    partyReaction.textContent = reactions[reactionIdx % reactions.length];
+    reactionIdx++;
+    burstConfetti(35);
+  });
+
+  // ---------- Background music (self-contained melody, no external file) ----------
+  let audioCtx = null;
+  let isPlaying = false;
+  let stopRequested = false;
+  const musicBtn = document.getElementById('musicBtn');
+
+  // "Happy Birthday" melody: [note, duration in beats]
+  const melody = [
+    ['G4',0.75],['G4',0.25],['A4',1],['G4',1],['C5',1],['B4',2],
+    ['G4',0.75],['G4',0.25],['A4',1],['G4',1],['D5',1],['C5',2],
+    ['G4',0.75],['G4',0.25],['G5',1],['E5',1],['C5',1],['B4',1],['A4',2],
+    ['F5',0.75],['F5',0.25],['E5',1],['C5',1],['D5',1],['C5',2]
+  ];
+
+  const noteFreq = {
+    'C4':261.63,'D4':293.66,'E4':329.63,'F4':349.23,'G4':392.00,'A4':440.00,'B4':493.88,
+    'C5':523.25,'D5':587.33,'E5':659.25,'F5':698.46,'G5':783.99,'A5':880.00,'B5':987.77
+  };
+
+  async function playMelody() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const beatDuration = 0.35;
+    let time = audioCtx.currentTime;
+
+    for (const [note, beats] of melody) {
+      if (stopRequested) break;
+      const freq = noteFreq[note];
+      const dur = beats * beatDuration;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0, time);
+      gain.gain.linearRampToValueAtTime(0.25, time + 0.05);
+      gain.gain.linearRampToValueAtTime(0, time + dur - 0.05);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(time);
+      osc.stop(time + dur);
+      time += dur;
+    }
+
+    const totalDuration = melody.reduce((sum, [,b]) => sum + b, 0) * beatDuration;
+    setTimeout(() => {
+      if (!stopRequested) {
+        // loop
+        if (isPlaying) playMelody();
+      }
+    }, totalDuration * 1000);
+  }
+
+  musicBtn.addEventListener('click', () => {
+    if (!isPlaying) {
+      isPlaying = true;
+      stopRequested = false;
+      musicBtn.textContent = '🔊';
+      playMelody();
+    } else {
+      isPlaying = false;
+      stopRequested = true;
+      musicBtn.textContent = '🔇';
+    }
+  });
+</script>
+
+</body>
+</html>
