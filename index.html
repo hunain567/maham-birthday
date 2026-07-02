@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Maham 💗</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   body {
     min-height: 100vh;
     background: linear-gradient(135deg, #ffdde1, #ff9a9e, #fecfef, #ff77a9);
     background-size: 400% 400%;
-    animation: gradientShift 10s ease infinite;
+    animation: gradientShift 12s ease infinite;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow-x: hidden;
     position: relative;
+    padding: 20px;
   }
 
   @keyframes gradientShift {
@@ -26,276 +27,262 @@
     100% { background-position: 0% 50%; }
   }
 
-  .container {
-    text-align: center;
-    padding: 40px 25px;
-    z-index: 10;
-    max-width: 500px;
-  }
+  .stage { display: none; text-align: center; z-index: 10; max-width: 480px; width: 100%; }
+  .stage.active { display: block; animation: fadeIn 0.6s ease; }
 
-  .balloon {
-    position: fixed;
-    bottom: -150px;
-    font-size: 45px;
-    animation: floatUp linear infinite;
-    z-index: 1;
-    opacity: 0.9;
-    pointer-events: none;
-  }
-
-  @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
-    100% { transform: translateY(-110vh) rotate(15deg); opacity: 0; }
-  }
-
-  .heart {
-    position: fixed;
-    top: -30px;
-    font-size: 20px;
-    animation: fall linear infinite;
-    z-index: 1;
-    opacity: 0.8;
-    pointer-events: none;
-  }
-
-  @keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.8;}
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3;}
-  }
-
-  .cake {
-    font-size: 80px;
-    animation: bounce 2s ease-in-out infinite;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-
-  h1 {
-    font-size: 2.6em;
-    color: #ffffff;
-    text-shadow: 2px 2px 10px rgba(255, 20, 100, 0.5);
-    margin: 20px 0 10px;
-    animation: popIn 1.2s ease;
-  }
-
-  @keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
-    70% { transform: scale(1.15); }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  .name {
-    font-size: 1.4em;
-    color: #fff0f5;
-    font-weight: 300;
-    margin-bottom: 25px;
-  }
-
-  .message-box {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 25px;
-    margin: 20px 0;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px rgba(255, 20, 100, 0.2);
-    animation: fadeInUp 1.5s ease;
-    min-height: 110px;
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .message-box p {
-    color: #ffffff;
-    font-size: 1.05em;
-    line-height: 1.7;
+  h1 {
+    font-size: 1.8em;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(255,20,100,0.5);
+    margin-bottom: 8px;
   }
+  .subtitle { color: #fff0f5; font-size: 1em; margin-bottom: 25px; font-weight: 300; }
 
-  .cursor-blink {
-    display: inline-block;
-    width: 2px;
+  /* ---------- STAGE 1: Scratch Card ---------- */
+  .scratch-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    height: 260px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(255,20,100,0.3);
     background: #fff;
-    animation: blink 0.8s step-end infinite;
   }
-  @keyframes blink { 50% { opacity: 0; } }
 
-  .party-request {
+  .scratch-reveal {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 25px;
+    background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+    text-align: center;
+  }
+  .scratch-reveal p { color: #d6336c; font-size: 1.05em; line-height: 1.6; font-weight: 500; }
+  .scratch-reveal .big-emoji { font-size: 2.5em; margin-bottom: 10px; }
+
+  #scratchCanvas {
+    position: absolute;
+    inset: 0;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .scratch-hint {
+    margin-top: 18px;
+    color: #fff;
+    font-size: 0.9em;
+    opacity: 0.9;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+
+  .continue-btn {
     margin-top: 25px;
     background: #ffffff;
     color: #ff4785;
-    padding: 18px 25px;
+    padding: 14px 32px;
     border-radius: 50px;
     font-weight: bold;
-    font-size: 1.15em;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    animation: shake 3s ease-in-out infinite;
-    display: inline-block;
-    cursor: pointer;
+    font-size: 1.05em;
     border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    display: none;
     transition: transform 0.15s ease;
   }
-  .party-request:active { transform: scale(0.95); }
+  .continue-btn:active { transform: scale(0.95); }
+  .continue-btn.show { display: inline-block; animation: popIn 0.5s ease; }
 
-  @keyframes shake {
-    0%, 90%, 100% { transform: rotate(0deg); }
-    92% { transform: rotate(-3deg); }
-    94% { transform: rotate(3deg); }
-    96% { transform: rotate(-2deg); }
-    98% { transform: rotate(2deg); }
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
   }
 
-  .party-reaction {
-    margin-top: 14px;
-    color: #fff;
-    font-size: 1em;
-    font-weight: 600;
-    min-height: 24px;
-    text-shadow: 1px 1px 6px rgba(255,20,100,0.4);
+  /* ---------- STAGE 2: Signature Invitation ---------- */
+  .invite-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 22px;
+    padding: 30px 25px;
+    box-shadow: 0 15px 40px rgba(255,20,100,0.3);
+    border: 2px dashed #ff9ab8;
+  }
+  .invite-card h2 {
+    color: #d6336c;
+    font-size: 1.4em;
+    margin-bottom: 6px;
+  }
+  .invite-card .sub {
+    color: #a35a72;
+    font-size: 0.9em;
+    margin-bottom: 18px;
+  }
+  .invite-line {
+    text-align: left;
+    color: #7a3b52;
+    font-size: 0.95em;
+    margin: 10px 0;
+    padding-left: 4px;
+  }
+  .invite-line b { color: #d6336c; }
+
+  #signatureCanvas {
+    width: 100%;
+    height: 120px;
+    background: #fff8fa;
+    border: 2px solid #ffc2d6;
+    border-radius: 12px;
+    margin-top: 15px;
+    touch-action: none;
+    cursor: crosshair;
+  }
+  .sign-label {
+    font-size: 0.8em;
+    color: #b5758f;
+    margin-top: 8px;
+    font-style: italic;
   }
 
-  .emoji-row {
-    font-size: 1.8em;
-    margin-top: 20px;
-    letter-spacing: 8px;
-  }
-
-  .sparkle {
-    position: fixed;
-    font-size: 18px;
-    animation: sparkle 2.5s ease-in-out infinite;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  @keyframes sparkle {
-    0%, 100% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 1; transform: scale(1.2); }
-  }
-
-  .music-btn {
-    position: fixed;
-    top: 18px;
-    right: 18px;
-    background: rgba(255,255,255,0.85);
+  .sign-actions { display: flex; gap: 10px; margin-top: 16px; justify-content: center; }
+  .clear-btn, .confirm-btn {
+    padding: 12px 22px;
+    border-radius: 50px;
     border: none;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    font-size: 1.3em;
+    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-    z-index: 20;
-    transition: transform 0.2s ease;
+    font-size: 0.95em;
+    transition: transform 0.15s ease;
   }
-  .music-btn:hover { transform: scale(1.1); }
+  .clear-btn:active, .confirm-btn:active { transform: scale(0.95); }
+  .clear-btn { background: #fff; color: #a35a72; border: 1px solid #ffc2d6; }
+  .confirm-btn { background: linear-gradient(135deg,#ff6fa5,#ff4785); color: #fff; box-shadow: 0 6px 18px rgba(255,71,133,0.4); }
+
+  /* ---------- STAGE 3: Confirmation ---------- */
+  .confirm-stamp {
+    font-size: 4em;
+    margin-bottom: 10px;
+    animation: stampIn 0.6s cubic-bezier(.36,1.6,.6,1);
+  }
+  @keyframes stampIn {
+    0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+    100% { transform: scale(1) rotate(-8deg); opacity: 1; }
+  }
+  .confirmed-text {
+    color: #fff;
+    font-size: 1.6em;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px rgba(255,20,100,0.5);
+    margin-bottom: 10px;
+  }
+  .confirmed-sub { color: #fff0f5; font-size: 0.95em; margin-bottom: 20px; }
+
+  .signed-preview {
+    background: #fff;
+    border-radius: 14px;
+    padding: 12px;
+    display: inline-block;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+
+  footer { margin-top: 25px; font-size: 0.78em; color: rgba(255,255,255,0.7); }
+
+  /* floating hearts background (all stages) */
+  .heart {
+    position: fixed; top: -30px; font-size: 18px;
+    animation: fall linear infinite; z-index: 1; opacity: 0.7; pointer-events: none;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7;}
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0.2;}
+  }
 
   .confetti-piece {
-    position: fixed;
-    top: -20px;
-    width: 10px;
-    height: 10px;
-    z-index: 30;
-    pointer-events: none;
-  }
-
-  footer {
-    margin-top: 30px;
-    font-size: 0.8em;
-    color: rgba(255,255,255,0.7);
+    position: fixed; top: -20px; width: 10px; height: 10px; z-index: 30; pointer-events: none;
   }
 </style>
 </head>
 <body>
 
-  <button class="music-btn" id="musicBtn" title="Play music">🔇</button>
+  <!-- STAGE 1: Scratch Card -->
+  <div class="stage active" id="stage1">
+    <h1>Ek Surprise Hai Aapke Liye 🎁</h1>
+    <div class="subtitle">Scratch karke reveal karein 👇</div>
 
-  <div class="container">
-    <div class="cake" id="cake" title="Tap for confetti!">🎂</div>
-    <h1>Happy Birthday!</h1>
-    <div class="name">Maham 💗</div>
-
-    <div class="message-box">
-      <p id="typedMessage"></p>
+    <div class="scratch-wrap">
+      <div class="scratch-reveal">
+        <div class="big-emoji">🎂💗</div>
+        <p>Happy Birthday Maham! Aaj ka din khaas hai kyunke aap paida hui.
+        Hamesha khush raho, muskurati raho, aur zindagi mein wohi milay
+        jo dil chahay. ✨</p>
+      </div>
+      <canvas id="scratchCanvas"></canvas>
     </div>
 
-    <button class="party-request" id="partyBtn">
-      🎉 Ab party kab de rahi ho?! 🎉
-    </button>
-    <div class="party-reaction" id="partyReaction"></div>
+    <div class="scratch-hint" id="scratchHint">👆 Finger/mouse se scratch karein</div>
+    <button class="continue-btn" id="continueBtn">Aage Badhein →</button>
+  </div>
 
-    <div class="emoji-row">🎈🎁🎀🍰🎊</div>
+  <!-- STAGE 2: Signature Invitation -->
+  <div class="stage" id="stage2">
+    <div class="invite-card">
+      <h2>🎉 Party Invitation Contract</h2>
+      <div class="sub">Official-ish Agreement™</div>
+      <div class="invite-line">📅 <b>Kab:</b> Aap decide karengi (jaldi 😄)</div>
+      <div class="invite-line">🎂 <b>Kis liye:</b> Maham ki Birthday Celebration</div>
+      <div class="invite-line">✅ <b>Sharat:</b> Cake + Dosti + Bohat saara shor-sharaba</div>
+      <div class="invite-line">✍️ Neeche sign karke party confirm karein:</div>
 
+      <canvas id="signatureCanvas"></canvas>
+      <div class="sign-label">yahan apna signature banayein</div>
+
+      <div class="sign-actions">
+        <button class="clear-btn" id="clearBtn">Clear</button>
+        <button class="confirm-btn" id="confirmBtn">Confirm Party 🎉</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 3: Confirmation -->
+  <div class="stage" id="stage3">
+    <div class="confirm-stamp">✅</div>
+    <div class="confirmed-text">Party CONFIRMED!</div>
+    <div class="confirmed-sub">Signed, sealed, aur ab official hai 🎊</div>
+    <div class="signed-preview">
+      <canvas id="previewCanvas" width="280" height="90"></canvas>
+    </div>
     <footer>Made with 💗 just for you</footer>
   </div>
 
 <script>
-  // ---------- Floating balloons ----------
-  const balloonEmojis = ['🎈','🎈','🎈','🩷'];
-  for (let i = 0; i < 12; i++) {
-    const b = document.createElement('div');
-    b.className = 'balloon';
-    b.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
-    b.style.left = Math.random() * 100 + 'vw';
-    b.style.animationDuration = (6 + Math.random() * 6) + 's';
-    b.style.animationDelay = (Math.random() * 6) + 's';
-    document.body.appendChild(b);
-  }
-
-  // ---------- Falling hearts ----------
-  const heartEmojis = ['💗','💕','💖','💓'];
-  for (let i = 0; i < 20; i++) {
+  // ---------- Floating hearts background ----------
+  const heartEmojis = ['💗','💕','💖'];
+  for (let i = 0; i < 15; i++) {
     const h = document.createElement('div');
     h.className = 'heart';
     h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
     h.style.left = Math.random() * 100 + 'vw';
-    h.style.animationDuration = (5 + Math.random() * 5) + 's';
+    h.style.animationDuration = (6 + Math.random() * 6) + 's';
     h.style.animationDelay = (Math.random() * 8) + 's';
     document.body.appendChild(h);
   }
 
-  // ---------- Sparkles ----------
-  const sparkleEmojis = ['✨','⭐','💫'];
-  for (let i = 0; i < 15; i++) {
-    const s = document.createElement('div');
-    s.className = 'sparkle';
-    s.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
-    s.style.left = Math.random() * 100 + 'vw';
-    s.style.top = Math.random() * 100 + 'vh';
-    s.style.animationDelay = (Math.random() * 3) + 's';
-    document.body.appendChild(s);
-  }
-
-  // ---------- Typing effect ----------
-  const fullMessage = "Aaj ka din khaas hai, kyunke aap paida hui! 🌸 Hamesha khush raho, muskurati raho, aur zindagi mein wohi milay jo dil chahay. Bohat saari khushiyan, pyar aur barkatein aapke naseeb mein hon. ✨";
-  const typedEl = document.getElementById('typedMessage');
-  let idx = 0;
-  function typeNext() {
-    if (idx <= fullMessage.length) {
-      typedEl.innerHTML = fullMessage.slice(0, idx) + '<span class="cursor-blink">|</span>';
-      idx++;
-      setTimeout(typeNext, 35);
-    } else {
-      typedEl.innerHTML = fullMessage;
-    }
-  }
-  setTimeout(typeNext, 600);
-
-  // ---------- Confetti burst ----------
-  const confettiColors = ['#ff77a9','#ffdde1','#ff4785','#fff0f5','#ffb6c1','#fecfef'];
-  function burstConfetti(count = 60) {
+  function burstConfetti(count = 50) {
+    const colors = ['#ff77a9','#ffdde1','#ff4785','#fff0f5','#ffb6c1'];
     for (let i = 0; i < count; i++) {
       const c = document.createElement('div');
       c.className = 'confetti-piece';
       c.style.left = Math.random() * 100 + 'vw';
-      c.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
       c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
       const duration = 2 + Math.random() * 2;
       c.style.transition = `transform ${duration}s ease-out, opacity ${duration}s ease-out`;
@@ -308,89 +295,151 @@
     }
   }
 
-  // Cake click -> confetti
-  document.getElementById('cake').addEventListener('click', () => burstConfetti(50));
-
-  // ---------- Party button fun reactions ----------
-  const reactions = [
-    "Sochti hoon... 🤔",
-    "Achaaa! Toh date fix karti hoon 📅",
-    "Cake, dosti, aur bohat shor-sharaba honi chahiye! 🍰🔊",
-    "Theek hai theek hai... jald hi! 😄",
-    "Party bina Maham ke adhoori hai! 🎊",
-    "Venue book karo, guests bulao... let's go! 🥳"
-  ];
-  let reactionIdx = 0;
-  const partyBtn = document.getElementById('partyBtn');
-  const partyReaction = document.getElementById('partyReaction');
-  partyBtn.addEventListener('click', () => {
-    partyReaction.textContent = reactions[reactionIdx % reactions.length];
-    reactionIdx++;
-    burstConfetti(35);
-  });
-
-  // ---------- Background music (self-contained melody, no external file) ----------
-  let audioCtx = null;
-  let isPlaying = false;
-  let stopRequested = false;
-  const musicBtn = document.getElementById('musicBtn');
-
-  // "Happy Birthday" melody: [note, duration in beats]
-  const melody = [
-    ['G4',0.75],['G4',0.25],['A4',1],['G4',1],['C5',1],['B4',2],
-    ['G4',0.75],['G4',0.25],['A4',1],['G4',1],['D5',1],['C5',2],
-    ['G4',0.75],['G4',0.25],['G5',1],['E5',1],['C5',1],['B4',1],['A4',2],
-    ['F5',0.75],['F5',0.25],['E5',1],['C5',1],['D5',1],['C5',2]
-  ];
-
-  const noteFreq = {
-    'C4':261.63,'D4':293.66,'E4':329.63,'F4':349.23,'G4':392.00,'A4':440.00,'B4':493.88,
-    'C5':523.25,'D5':587.33,'E5':659.25,'F5':698.46,'G5':783.99,'A5':880.00,'B5':987.77
-  };
-
-  async function playMelody() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const beatDuration = 0.35;
-    let time = audioCtx.currentTime;
-
-    for (const [note, beats] of melody) {
-      if (stopRequested) break;
-      const freq = noteFreq[note];
-      const dur = beats * beatDuration;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0, time);
-      gain.gain.linearRampToValueAtTime(0.25, time + 0.05);
-      gain.gain.linearRampToValueAtTime(0, time + dur - 0.05);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(time);
-      osc.stop(time + dur);
-      time += dur;
-    }
-
-    const totalDuration = melody.reduce((sum, [,b]) => sum + b, 0) * beatDuration;
-    setTimeout(() => {
-      if (!stopRequested) {
-        // loop
-        if (isPlaying) playMelody();
-      }
-    }, totalDuration * 1000);
+  function goToStage(n) {
+    document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+    document.getElementById('stage' + n).classList.add('active');
   }
 
-  musicBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-      isPlaying = true;
-      stopRequested = false;
-      musicBtn.textContent = '🔊';
-      playMelody();
-    } else {
-      isPlaying = false;
-      stopRequested = true;
-      musicBtn.textContent = '🔇';
+  // ---------- STAGE 1: Scratch card logic ----------
+  const canvas = document.getElementById('scratchCanvas');
+  const ctx = canvas.getContext('2d');
+  const wrap = document.querySelector('.scratch-wrap');
+  const scratchHint = document.getElementById('scratchHint');
+  const continueBtn = document.getElementById('continueBtn');
+  let scratching = false;
+  let scratchedEnough = false;
+
+  function initScratch() {
+    const rect = wrap.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    ctx.fillStyle = '#d6336c';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 20px Segoe UI';
+    ctx.textAlign = 'center';
+    ctx.fillText('✨ Scratch Karein ✨', canvas.width/2, canvas.height/2);
+    ctx.globalCompositeOperation = 'destination-out';
+  }
+  window.addEventListener('load', initScratch);
+  window.addEventListener('resize', initScratch);
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  }
+
+  function scratch(e) {
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
+    ctx.fill();
+    checkScratchProgress();
+  }
+
+  function checkScratchProgress() {
+    if (scratchedEnough) return;
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let cleared = 0;
+    for (let i = 3; i < imageData.length; i += 4 * 20) {
+      if (imageData[i] === 0) cleared++;
     }
+    const total = imageData.length / (4 * 20);
+    if (cleared / total > 0.5) {
+      scratchedEnough = true;
+      scratchHint.style.display = 'none';
+      continueBtn.classList.add('show');
+      // fade out rest of canvas
+      canvas.style.transition = 'opacity 0.6s ease';
+      canvas.style.opacity = '0';
+      setTimeout(() => canvas.style.pointerEvents = 'none', 600);
+    }
+  }
+
+  canvas.addEventListener('mousedown', () => scratching = true);
+  canvas.addEventListener('mouseup', () => scratching = false);
+  canvas.addEventListener('mouseleave', () => scratching = false);
+  canvas.addEventListener('mousemove', (e) => { if (scratching) scratch(e); });
+  canvas.addEventListener('touchstart', (e) => { scratching = true; scratch(e); });
+  canvas.addEventListener('touchend', () => scratching = false);
+  canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (scratching) scratch(e); }, { passive: false });
+
+  continueBtn.addEventListener('click', () => {
+    burstConfetti(30);
+    goToStage(2);
+    setTimeout(initSignaturePad, 100);
+  });
+
+  // ---------- STAGE 2: Signature pad ----------
+  const sigCanvas = document.getElementById('signatureCanvas');
+  const sigCtx = sigCanvas.getContext('2d');
+  let drawing = false;
+  let hasSigned = false;
+
+  function initSignaturePad() {
+    const rect = sigCanvas.getBoundingClientRect();
+    sigCanvas.width = rect.width;
+    sigCanvas.height = rect.height;
+    sigCtx.strokeStyle = '#d6336c';
+    sigCtx.lineWidth = 2.5;
+    sigCtx.lineCap = 'round';
+    sigCtx.lineJoin = 'round';
+  }
+
+  function getSigPos(e) {
+    const rect = sigCanvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  }
+
+  function startDraw(e) {
+    drawing = true;
+    hasSigned = true;
+    const pos = getSigPos(e);
+    sigCtx.beginPath();
+    sigCtx.moveTo(pos.x, pos.y);
+  }
+  function draw(e) {
+    if (!drawing) return;
+    const pos = getSigPos(e);
+    sigCtx.lineTo(pos.x, pos.y);
+    sigCtx.stroke();
+  }
+  function endDraw() { drawing = false; }
+
+  sigCanvas.addEventListener('mousedown', startDraw);
+  sigCanvas.addEventListener('mousemove', draw);
+  sigCanvas.addEventListener('mouseup', endDraw);
+  sigCanvas.addEventListener('mouseleave', endDraw);
+  sigCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); }, { passive: false });
+  sigCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
+  sigCanvas.addEventListener('touchend', endDraw);
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+    hasSigned = false;
+  });
+
+  document.getElementById('confirmBtn').addEventListener('click', () => {
+    if (!hasSigned) {
+      sigCanvas.style.borderColor = '#ff4785';
+      sigCanvas.style.animation = 'none';
+      setTimeout(() => { sigCanvas.style.animation = ''; }, 10);
+      alert('Pehle sign to kar dein! 😄');
+      return;
+    }
+    // copy signature to preview
+    const previewCanvas = document.getElementById('previewCanvas');
+    const previewCtx = previewCanvas.getContext('2d');
+    previewCtx.fillStyle = '#fff8fa';
+    previewCtx.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
+    previewCtx.drawImage(sigCanvas, 0, 0, sigCanvas.width, sigCanvas.height, 0, 0, previewCanvas.width, previewCanvas.height);
+
+    burstConfetti(70);
+    goToStage(3);
   });
 </script>
 
