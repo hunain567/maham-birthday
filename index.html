@@ -3,279 +3,380 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Maham 💗</title>
+<title>Maham OS 💗</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
 
   body {
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a0f16;
+  }
+
+  /* ================= BOOT SCREEN ================= */
+  #bootScreen {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #2b0f1e, #4a1030);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 100;
+    color: #ffb6d5;
+  }
+  .boot-logo { font-size: 3em; margin-bottom: 10px; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.7;transform:scale(1);} 50%{opacity:1;transform:scale(1.08);} }
+  .boot-title { font-size: 1.3em; letter-spacing: 2px; margin-bottom: 30px; font-weight: 300; }
+  .boot-bar-track { width: 260px; height: 8px; background: rgba(255,255,255,0.15); border-radius: 10px; overflow: hidden; }
+  .boot-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg,#ff6fa5,#ff4785); border-radius: 10px; transition: width 0.3s ease; }
+  .boot-text { margin-top: 14px; font-size: 0.8em; color: #ffa8cc; font-family: monospace; }
+
+  /* ================= DESKTOP ================= */
+  #desktop {
+    position: fixed; inset: 0;
     background: linear-gradient(135deg, #ffdde1, #ff9a9e, #fecfef, #ff77a9);
     background-size: 400% 400%;
-    animation: gradientShift 12s ease infinite;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-x: hidden;
-    position: relative;
-    padding: 20px;
-  }
-
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  .stage { display: none; text-align: center; z-index: 10; max-width: 480px; width: 100%; }
-  .stage.active { display: block; animation: fadeIn 0.6s ease; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  h1 {
-    font-size: 1.8em;
-    color: #fff;
-    text-shadow: 2px 2px 10px rgba(255,20,100,0.5);
-    margin-bottom: 8px;
-  }
-  .subtitle { color: #fff0f5; font-size: 1em; margin-bottom: 25px; font-weight: 300; }
-
-  /* ---------- STAGE 1: Scratch Card ---------- */
-  .scratch-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 380px;
-    height: 260px;
-    margin: 0 auto;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 12px 35px rgba(255,20,100,0.3);
-    background: #fff;
-  }
-
-  .scratch-reveal {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 25px;
-    background: linear-gradient(135deg, #fff0f5, #ffe4ec);
-    text-align: center;
-  }
-  .scratch-reveal p { color: #d6336c; font-size: 1.05em; line-height: 1.6; font-weight: 500; }
-  .scratch-reveal .big-emoji { font-size: 2.5em; margin-bottom: 10px; }
-
-  #scratchCanvas {
-    position: absolute;
-    inset: 0;
-    cursor: grab;
-    touch-action: none;
-  }
-
-  .scratch-hint {
-    margin-top: 18px;
-    color: #fff;
-    font-size: 0.9em;
-    opacity: 0.9;
-    animation: pulse 1.8s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
-
-  .continue-btn {
-    margin-top: 25px;
-    background: #ffffff;
-    color: #ff4785;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-weight: bold;
-    font-size: 1.05em;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    animation: gradientShift 14s ease infinite;
     display: none;
-    transition: transform 0.15s ease;
   }
-  .continue-btn:active { transform: scale(0.95); }
-  .continue-btn.show { display: inline-block; animation: popIn 0.5s ease; }
-
-  @keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
-    70% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
   }
 
-  /* ---------- STAGE 2: Signature Invitation ---------- */
-  .invite-card {
-    background: rgba(255,255,255,0.95);
-    border-radius: 22px;
-    padding: 30px 25px;
-    box-shadow: 0 15px 40px rgba(255,20,100,0.3);
-    border: 2px dashed #ff9ab8;
+  .icons { padding: 25px; display: flex; flex-direction: column; gap: 22px; width: 100px; }
+  .icon {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    cursor: pointer; padding: 8px; border-radius: 10px; transition: background 0.2s ease;
   }
-  .invite-card h2 {
-    color: #d6336c;
-    font-size: 1.4em;
-    margin-bottom: 6px;
+  .icon:hover, .icon:active { background: rgba(255,255,255,0.25); }
+  .icon .emoji { font-size: 2.3em; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2)); }
+  .icon .label {
+    font-size: 0.72em; color: #fff; text-align: center; text-shadow: 1px 1px 4px rgba(0,0,0,0.35);
+    font-weight: 500; line-height: 1.2;
   }
-  .invite-card .sub {
-    color: #a35a72;
-    font-size: 0.9em;
-    margin-bottom: 18px;
-  }
-  .invite-line {
-    text-align: left;
-    color: #7a3b52;
-    font-size: 0.95em;
-    margin: 10px 0;
-    padding-left: 4px;
-  }
-  .invite-line b { color: #d6336c; }
 
-  #signatureCanvas {
-    width: 100%;
-    height: 120px;
+  .taskbar {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 46px;
+    background: rgba(255,255,255,0.35); backdrop-filter: blur(12px);
+    display: flex; align-items: center; padding: 0 16px; gap: 10px;
+    border-top: 1px solid rgba(255,255,255,0.5); z-index: 50;
+  }
+  .start-btn {
+    background: linear-gradient(135deg,#ff6fa5,#ff4785); color: #fff; border: none;
+    padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 0.85em; cursor: pointer;
+  }
+  .clock { margin-left: auto; color: #fff; font-size: 0.85em; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+
+  /* ================= WINDOWS ================= */
+  .window {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 340px;
+    max-width: 90vw;
     background: #fff8fa;
-    border: 2px solid #ffc2d6;
-    border-radius: 12px;
-    margin-top: 15px;
-    touch-action: none;
-    cursor: crosshair;
-  }
-  .sign-label {
-    font-size: 0.8em;
-    color: #b5758f;
-    margin-top: 8px;
-    font-style: italic;
-  }
-
-  .sign-actions { display: flex; gap: 10px; margin-top: 16px; justify-content: center; }
-  .clear-btn, .confirm-btn {
-    padding: 12px 22px;
-    border-radius: 50px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.95em;
-    transition: transform 0.15s ease;
-  }
-  .clear-btn:active, .confirm-btn:active { transform: scale(0.95); }
-  .clear-btn { background: #fff; color: #a35a72; border: 1px solid #ffc2d6; }
-  .confirm-btn { background: linear-gradient(135deg,#ff6fa5,#ff4785); color: #fff; box-shadow: 0 6px 18px rgba(255,71,133,0.4); }
-
-  /* ---------- STAGE 3: Confirmation ---------- */
-  .confirm-stamp {
-    font-size: 4em;
-    margin-bottom: 10px;
-    animation: stampIn 0.6s cubic-bezier(.36,1.6,.6,1);
-  }
-  @keyframes stampIn {
-    0% { transform: scale(3) rotate(-15deg); opacity: 0; }
-    100% { transform: scale(1) rotate(-8deg); opacity: 1; }
-  }
-  .confirmed-text {
-    color: #fff;
-    font-size: 1.6em;
-    font-weight: bold;
-    text-shadow: 2px 2px 10px rgba(255,20,100,0.5);
-    margin-bottom: 10px;
-  }
-  .confirmed-sub { color: #fff0f5; font-size: 0.95em; margin-bottom: 20px; }
-
-  .signed-preview {
-    background: #fff;
     border-radius: 14px;
-    padding: 12px;
-    display: inline-block;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    display: none;
+    z-index: 60;
+    overflow: hidden;
+    border: 1px solid #ffd6e5;
   }
+  .window.show { display: block; animation: winOpen 0.3s ease; }
+  @keyframes winOpen { from { opacity:0; transform: translate(-50%,-45%) scale(0.9); } to { opacity:1; transform: translate(-50%,-50%) scale(1); } }
 
-  footer { margin-top: 25px; font-size: 0.78em; color: rgba(255,255,255,0.7); }
+  .win-titlebar {
+    background: linear-gradient(135deg,#ff6fa5,#ff4785);
+    color: #fff; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.85em; font-weight: 600;
+  }
+  .win-close {
+    width: 22px; height: 22px; background: rgba(255,255,255,0.25); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9em;
+  }
+  .win-body { padding: 20px; max-height: 60vh; overflow-y: auto; }
 
-  /* floating hearts background (all stages) */
-  .heart {
-    position: fixed; top: -30px; font-size: 18px;
-    animation: fall linear infinite; z-index: 1; opacity: 0.7; pointer-events: none;
-  }
-  @keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0.7;}
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0.2;}
-  }
+  /* message window */
+  #winMessage .win-body p { color: #7a3b52; font-size: 0.95em; line-height: 1.7; }
 
-  .confetti-piece {
-    position: fixed; top: -20px; width: 10px; height: 10px; z-index: 30; pointer-events: none;
+  /* about window */
+  .trait-row { margin-bottom: 14px; }
+  .trait-label { display: flex; justify-content: space-between; font-size: 0.85em; color: #d6336c; font-weight: 600; margin-bottom: 4px; }
+  .trait-bar-track { height: 8px; background: #ffe0ec; border-radius: 10px; overflow: hidden; }
+  .trait-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg,#ff9ab8,#ff4785); border-radius: 10px; transition: width 1.4s ease; }
+
+  /* radio window */
+  .radio-body { text-align: center; }
+  .radio-display {
+    background: #2b0f1e; color: #ffb6d5; font-family: monospace; font-size: 1.3em;
+    padding: 14px; border-radius: 8px; margin-bottom: 14px; letter-spacing: 2px;
   }
+  .radio-msg-box {
+    background: #fff0f5; border-radius: 10px; padding: 16px; min-height: 90px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+  }
+  .radio-msg-box p { color: #d6336c; font-size: 0.9em; line-height: 1.6; }
+  .static-text { color: #b5758f; font-family: monospace; font-size: 0.85em; letter-spacing: 1px; }
+
+  .radio-controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 8px; }
+  .radio-btn {
+    background: linear-gradient(135deg,#ff6fa5,#ff4785); color: #fff; border: none;
+    width: 42px; height: 42px; border-radius: 50%; font-size: 1.1em; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255,71,133,0.4);
+  }
+  .radio-btn:active { transform: scale(0.92); }
+  .station-dots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #ffd6e5; }
+  .dot.active { background: #ff4785; }
+
+  .accept-btn {
+    margin-top: 16px; background: #fff; color: #ff4785; border: 2px solid #ff4785;
+    padding: 12px 26px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 0.95em;
+    display: none;
+  }
+  .accept-btn.show { display: inline-block; animation: popIn 0.4s ease; }
+  @keyframes popIn { 0%{transform:scale(0);opacity:0;} 70%{transform:scale(1.1);} 100%{transform:scale(1);opacity:1;} }
+
+  /* confirmation window */
+  #winConfirm .win-body { text-align: center; }
+  .stamp { font-size: 3em; animation: stampIn 0.5s cubic-bezier(.36,1.6,.6,1); }
+  @keyframes stampIn { 0%{transform:scale(2.5) rotate(-15deg); opacity:0;} 100%{transform:scale(1) rotate(-6deg); opacity:1;} }
+  #winConfirm h3 { color: #d6336c; margin: 8px 0; }
+  #winConfirm p { color: #a35a72; font-size: 0.88em; }
+
+  .confetti-piece { position: fixed; top: -20px; width: 10px; height: 10px; z-index: 200; pointer-events: none; }
 </style>
 </head>
 <body>
 
-  <!-- STAGE 1: Scratch Card -->
-  <div class="stage active" id="stage1">
-    <h1>Ek Surprise Hai Aapke Liye 🎁</h1>
-    <div class="subtitle">Scratch karke reveal karein 👇</div>
+<!-- BOOT SCREEN -->
+<div id="bootScreen">
+  <div class="boot-logo">💻💗</div>
+  <div class="boot-title">MAHAM OS</div>
+  <div class="boot-bar-track"><div class="boot-bar-fill" id="bootFill"></div></div>
+  <div class="boot-text" id="bootText">Loading birthday.exe...</div>
+</div>
 
-    <div class="scratch-wrap">
-      <div class="scratch-reveal">
-        <div class="big-emoji">🎂💗</div>
-        <p>Happy Birthday Maham! Aaj ka din khaas hai kyunke aap paida hui.
-        Hamesha khush raho, muskurati raho, aur zindagi mein wohi milay
-        jo dil chahay. ✨</p>
-      </div>
-      <canvas id="scratchCanvas"></canvas>
+<!-- DESKTOP -->
+<div id="desktop">
+  <div class="icons">
+    <div class="icon" onclick="openWindow('winMessage')">
+      <div class="emoji">📄</div>
+      <div class="label">Birthday_<br>Message.txt</div>
     </div>
-
-    <div class="scratch-hint" id="scratchHint">👆 Finger/mouse se scratch karein</div>
-    <button class="continue-btn" id="continueBtn">Aage Badhein →</button>
-  </div>
-
-  <!-- STAGE 2: Signature Invitation -->
-  <div class="stage" id="stage2">
-    <div class="invite-card">
-      <h2>🎉 Party Invitation Contract</h2>
-      <div class="sub">Official-ish Agreement™</div>
-      <div class="invite-line">📅 <b>Kab:</b> Aap decide karengi (jaldi 😄)</div>
-      <div class="invite-line">🎂 <b>Kis liye:</b> Maham ki Birthday Celebration</div>
-      <div class="invite-line">✅ <b>Sharat:</b> Cake + Dosti + Bohat saara shor-sharaba</div>
-      <div class="invite-line">✍️ Neeche sign karke party confirm karein:</div>
-
-      <canvas id="signatureCanvas"></canvas>
-      <div class="sign-label">yahan apna signature banayein</div>
-
-      <div class="sign-actions">
-        <button class="clear-btn" id="clearBtn">Clear</button>
-        <button class="confirm-btn" id="confirmBtn">Confirm Party 🎉</button>
-      </div>
+    <div class="icon" onclick="openAbout()">
+      <div class="emoji">💗</div>
+      <div class="label">About_You.exe</div>
+    </div>
+    <div class="icon" onclick="openWindow('winRadio')">
+      <div class="emoji">📻</div>
+      <div class="label">Radio.app</div>
     </div>
   </div>
 
-  <!-- STAGE 3: Confirmation -->
-  <div class="stage" id="stage3">
-    <div class="confirm-stamp">✅</div>
-    <div class="confirmed-text">Party CONFIRMED!</div>
-    <div class="confirmed-sub">Signed, sealed, aur ab official hai 🎊</div>
-    <div class="signed-preview">
-      <canvas id="previewCanvas" width="280" height="90"></canvas>
-    </div>
-    <footer>Made with 💗 just for you</footer>
+  <div class="taskbar">
+    <button class="start-btn">🎀 Start</button>
+    <div class="clock" id="clock">12:00 AM</div>
   </div>
+</div>
+
+<!-- WINDOW: Message -->
+<div class="window" id="winMessage">
+  <div class="win-titlebar">
+    <span>📄 Birthday_Message.txt</span>
+    <div class="win-close" onclick="closeWindow('winMessage')">✕</div>
+  </div>
+  <div class="win-body">
+    <p>Happy Birthday Maham! 🎂 Aaj ka din khaas hai kyunke aap paida hui.
+    Hamesha khush raho, muskurati raho, aur zindagi mein wohi milay jo dil
+    chahay. Bohat saari khushiyan, pyar aur barkatein aapke naseeb mein hon. ✨</p>
+  </div>
+</div>
+
+<!-- WINDOW: About You -->
+<div class="window" id="winAbout">
+  <div class="win-titlebar">
+    <span>💗 About_You.exe</span>
+    <div class="win-close" onclick="closeWindow('winAbout')">✕</div>
+  </div>
+  <div class="win-body">
+    <div class="trait-row">
+      <div class="trait-label"><span>Kindness</span><span id="p1">0%</span></div>
+      <div class="trait-bar-track"><div class="trait-bar-fill" id="b1"></div></div>
+    </div>
+    <div class="trait-row">
+      <div class="trait-label"><span>Smile Quality</span><span id="p2">0%</span></div>
+      <div class="trait-bar-track"><div class="trait-bar-fill" id="b2"></div></div>
+    </div>
+    <div class="trait-row">
+      <div class="trait-label"><span>Being Awesome</span><span id="p3">0%</span></div>
+      <div class="trait-bar-track"><div class="trait-bar-fill" id="b3"></div></div>
+    </div>
+    <div class="trait-row">
+      <div class="trait-label"><span>Loved By Everyone</span><span id="p4">0%</span></div>
+      <div class="trait-bar-track"><div class="trait-bar-fill" id="b4"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WINDOW: Radio -->
+<div class="window" id="winRadio">
+  <div class="win-titlebar">
+    <span>📻 Radio.app</span>
+    <div class="win-close" onclick="closeWindow('winRadio')">✕</div>
+  </div>
+  <div class="win-body radio-body">
+    <div class="radio-display" id="freqDisplay">87.5 FM</div>
+    <div class="radio-msg-box" id="radioMsgBox">
+      <p class="static-text" id="radioMsgText">📡 Tune karne ke liye ▶ dabayein...</p>
+    </div>
+    <div class="radio-controls">
+      <button class="radio-btn" onclick="tuneRadio(-1)">◀</button>
+      <button class="radio-btn" onclick="tuneRadio(1)">▶</button>
+    </div>
+    <div class="station-dots" id="stationDots"></div>
+    <button class="accept-btn" id="acceptBtn" onclick="acceptParty()">Party Accept Karo 🎉</button>
+  </div>
+</div>
+
+<!-- WINDOW: Confirmation -->
+<div class="window" id="winConfirm">
+  <div class="win-titlebar">
+    <span>🎉 Party_Invite.app</span>
+    <div class="win-close" onclick="closeWindow('winConfirm')">✕</div>
+  </div>
+  <div class="win-body">
+    <div class="stamp">✅</div>
+    <h3>Party CONFIRMED!</h3>
+    <p>Signed, sealed, aur ab official hai 🎊<br>Ab bas date batao!</p>
+  </div>
+</div>
 
 <script>
-  // ---------- Floating hearts background ----------
-  const heartEmojis = ['💗','💕','💖'];
-  for (let i = 0; i < 15; i++) {
-    const h = document.createElement('div');
-    h.className = 'heart';
-    h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-    h.style.left = Math.random() * 100 + 'vw';
-    h.style.animationDuration = (6 + Math.random() * 6) + 's';
-    h.style.animationDelay = (Math.random() * 8) + 's';
-    document.body.appendChild(h);
+  // ============ BOOT SEQUENCE ============
+  const bootFill = document.getElementById('bootFill');
+  const bootText = document.getElementById('bootText');
+  const bootMessages = [
+    'Loading birthday.exe...',
+    'Installing good vibes...',
+    'Preparing surprises...',
+    'Almost there...'
+  ];
+  let bootProgress = 0;
+  const bootInterval = setInterval(() => {
+    bootProgress += 4 + Math.random() * 6;
+    if (bootProgress >= 100) {
+      bootProgress = 100;
+      clearInterval(bootInterval);
+      setTimeout(() => {
+        document.getElementById('bootScreen').style.display = 'none';
+        document.getElementById('desktop').style.display = 'block';
+      }, 400);
+    }
+    bootFill.style.width = bootProgress + '%';
+    bootText.textContent = bootMessages[Math.min(Math.floor(bootProgress / 26), bootMessages.length - 1)];
+  }, 220);
+
+  // ============ CLOCK ============
+  function updateClock() {
+    const now = new Date();
+    let h = now.getHours();
+    const m = now.getMinutes().toString().padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    document.getElementById('clock').textContent = `${h}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000 * 30);
+
+  // ============ WINDOW HELPERS ============
+  function openWindow(id) {
+    document.getElementById(id).classList.add('show');
+  }
+  function closeWindow(id) {
+    document.getElementById(id).classList.remove('show');
   }
 
+  // ============ ABOUT_YOU.EXE ============
+  let aboutAnimated = false;
+  function openAbout() {
+    openWindow('winAbout');
+    if (aboutAnimated) return;
+    aboutAnimated = true;
+    const traits = [
+      { bar: 'b1', pct: 'p1', val: 100 },
+      { bar: 'b2', pct: 'p2', val: 100 },
+      { bar: 'b3', pct: 'p3', val: 100 },
+      { bar: 'p4' === 'p4' ? 'b4' : 'b4', pct: 'p4', val: 100 }
+    ];
+    traits.forEach((t, i) => {
+      setTimeout(() => {
+        document.getElementById(t.bar).style.width = t.val + '%';
+        let curr = 0;
+        const step = setInterval(() => {
+          curr += 5;
+          if (curr >= t.val) { curr = t.val; clearInterval(step); }
+          document.getElementById(t.pct).textContent = curr + '%';
+        }, 60);
+      }, i * 400);
+    });
+  }
+
+  // ============ RADIO ============
+  const stations = [
+    { freq: '87.5 FM', msg: '🎵 Static... static... "Happy Birthday" sunai de raha hai kahin door se...' },
+    { freq: '91.2 FM', msg: '💗 Ye station keh raha hai: aap jaisi dost milna naseeb ki baat hai.' },
+    { freq: '96.7 FM', msg: '✨ Yahan bata rahe hain: aapki hansi sabse best hai, kabhi mat rokna.' },
+    { freq: '101.3 FM', msg: '🎉 PARTY FM LIVE: Ab bas ek kaam baaki hai... neeche button dabao!' }
+  ];
+  let currentStation = -1;
+
+  function renderDots() {
+    const dotsEl = document.getElementById('stationDots');
+    dotsEl.innerHTML = '';
+    stations.forEach((s, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === currentStation ? ' active' : '');
+      dotsEl.appendChild(d);
+    });
+  }
+  renderDots();
+
+  function tuneRadio(dir) {
+    const msgBox = document.getElementById('radioMsgBox');
+    const msgText = document.getElementById('radioMsgText');
+    const freqDisplay = document.getElementById('freqDisplay');
+    const acceptBtn = document.getElementById('acceptBtn');
+
+    let next = currentStation + dir;
+    if (next < 0) next = 0;
+    if (next > stations.length - 1) next = stations.length - 1;
+    currentStation = next;
+
+    // static flicker effect
+    msgText.className = 'static-text';
+    msgText.textContent = '📡 ...tuning...';
+    freqDisplay.textContent = (Math.random() * 20 + 85).toFixed(1) + ' FM';
+
+    setTimeout(() => {
+      freqDisplay.textContent = stations[currentStation].freq;
+      msgText.className = '';
+      msgText.style.color = '#d6336c';
+      msgText.textContent = stations[currentStation].msg;
+      renderDots();
+      if (currentStation === stations.length - 1) {
+        acceptBtn.classList.add('show');
+      } else {
+        acceptBtn.classList.remove('show');
+      }
+    }, 350);
+  }
+
+  function acceptParty() {
+    burstConfetti(70);
+    closeWindow('winRadio');
+    openWindow('winConfirm');
+  }
+
+  // ============ CONFETTI ============
   function burstConfetti(count = 50) {
     const colors = ['#ff77a9','#ffdde1','#ff4785','#fff0f5','#ffb6c1'];
     for (let i = 0; i < count; i++) {
@@ -294,153 +395,6 @@
       setTimeout(() => c.remove(), duration * 1000 + 100);
     }
   }
-
-  function goToStage(n) {
-    document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
-    document.getElementById('stage' + n).classList.add('active');
-  }
-
-  // ---------- STAGE 1: Scratch card logic ----------
-  const canvas = document.getElementById('scratchCanvas');
-  const ctx = canvas.getContext('2d');
-  const wrap = document.querySelector('.scratch-wrap');
-  const scratchHint = document.getElementById('scratchHint');
-  const continueBtn = document.getElementById('continueBtn');
-  let scratching = false;
-  let scratchedEnough = false;
-
-  function initScratch() {
-    const rect = wrap.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-    ctx.fillStyle = '#d6336c';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 20px Segoe UI';
-    ctx.textAlign = 'center';
-    ctx.fillText('✨ Scratch Karein ✨', canvas.width/2, canvas.height/2);
-    ctx.globalCompositeOperation = 'destination-out';
-  }
-  window.addEventListener('load', initScratch);
-  window.addEventListener('resize', initScratch);
-
-  function getPos(e) {
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: clientX - rect.left, y: clientY - rect.top };
-  }
-
-  function scratch(e) {
-    const pos = getPos(e);
-    ctx.beginPath();
-    ctx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
-    ctx.fill();
-    checkScratchProgress();
-  }
-
-  function checkScratchProgress() {
-    if (scratchedEnough) return;
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-    let cleared = 0;
-    for (let i = 3; i < imageData.length; i += 4 * 20) {
-      if (imageData[i] === 0) cleared++;
-    }
-    const total = imageData.length / (4 * 20);
-    if (cleared / total > 0.5) {
-      scratchedEnough = true;
-      scratchHint.style.display = 'none';
-      continueBtn.classList.add('show');
-      // fade out rest of canvas
-      canvas.style.transition = 'opacity 0.6s ease';
-      canvas.style.opacity = '0';
-      setTimeout(() => canvas.style.pointerEvents = 'none', 600);
-    }
-  }
-
-  canvas.addEventListener('mousedown', () => scratching = true);
-  canvas.addEventListener('mouseup', () => scratching = false);
-  canvas.addEventListener('mouseleave', () => scratching = false);
-  canvas.addEventListener('mousemove', (e) => { if (scratching) scratch(e); });
-  canvas.addEventListener('touchstart', (e) => { scratching = true; scratch(e); });
-  canvas.addEventListener('touchend', () => scratching = false);
-  canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (scratching) scratch(e); }, { passive: false });
-
-  continueBtn.addEventListener('click', () => {
-    burstConfetti(30);
-    goToStage(2);
-    setTimeout(initSignaturePad, 100);
-  });
-
-  // ---------- STAGE 2: Signature pad ----------
-  const sigCanvas = document.getElementById('signatureCanvas');
-  const sigCtx = sigCanvas.getContext('2d');
-  let drawing = false;
-  let hasSigned = false;
-
-  function initSignaturePad() {
-    const rect = sigCanvas.getBoundingClientRect();
-    sigCanvas.width = rect.width;
-    sigCanvas.height = rect.height;
-    sigCtx.strokeStyle = '#d6336c';
-    sigCtx.lineWidth = 2.5;
-    sigCtx.lineCap = 'round';
-    sigCtx.lineJoin = 'round';
-  }
-
-  function getSigPos(e) {
-    const rect = sigCanvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: clientX - rect.left, y: clientY - rect.top };
-  }
-
-  function startDraw(e) {
-    drawing = true;
-    hasSigned = true;
-    const pos = getSigPos(e);
-    sigCtx.beginPath();
-    sigCtx.moveTo(pos.x, pos.y);
-  }
-  function draw(e) {
-    if (!drawing) return;
-    const pos = getSigPos(e);
-    sigCtx.lineTo(pos.x, pos.y);
-    sigCtx.stroke();
-  }
-  function endDraw() { drawing = false; }
-
-  sigCanvas.addEventListener('mousedown', startDraw);
-  sigCanvas.addEventListener('mousemove', draw);
-  sigCanvas.addEventListener('mouseup', endDraw);
-  sigCanvas.addEventListener('mouseleave', endDraw);
-  sigCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); }, { passive: false });
-  sigCanvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); }, { passive: false });
-  sigCanvas.addEventListener('touchend', endDraw);
-
-  document.getElementById('clearBtn').addEventListener('click', () => {
-    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
-    hasSigned = false;
-  });
-
-  document.getElementById('confirmBtn').addEventListener('click', () => {
-    if (!hasSigned) {
-      sigCanvas.style.borderColor = '#ff4785';
-      sigCanvas.style.animation = 'none';
-      setTimeout(() => { sigCanvas.style.animation = ''; }, 10);
-      alert('Pehle sign to kar dein! 😄');
-      return;
-    }
-    // copy signature to preview
-    const previewCanvas = document.getElementById('previewCanvas');
-    const previewCtx = previewCanvas.getContext('2d');
-    previewCtx.fillStyle = '#fff8fa';
-    previewCtx.fillRect(0, 0, previewCanvas.width, previewCanvas.height);
-    previewCtx.drawImage(sigCanvas, 0, 0, sigCanvas.width, sigCanvas.height, 0, 0, previewCanvas.width, previewCanvas.height);
-
-    burstConfetti(70);
-    goToStage(3);
-  });
 </script>
 
 </body>
